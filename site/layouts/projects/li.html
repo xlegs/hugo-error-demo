@@ -1,0 +1,17 @@
+<div class="no-underline pa3 bg-grey-1 br1 mb2 db w-100">
+    <a :href="project.permalink" class="f3 b lh-title mb1 primary link dim no-underline pointer"><% project.name %></a>
+    <p class="mb0 f4 pointer link dim" @click="showUniversity(project.university)"><% project.university %></p>
+    <p class="mid-gray mb2 f5"><% project.date | formatDate %> - <span class="link dim pointer" v-on:click="showStatus(project.status)"><% project.status %></span></p>
+    <hr/>
+    <p class="mb0"><% project.description %></p>
+    <hr/>
+    <ul class="list">
+        <li v-for="cat in project.cats" class="link dim pointer f6 dib mr2 grey"  @click="showCategory(cat)">
+            <% cat %>
+        </li>
+
+    </ul>
+
+</div>
+
+

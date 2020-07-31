@@ -1,0 +1,39 @@
+<div class="mw-100 center bg-white">
+  <div class="cf pv3">
+    <div class="fl w-100 w-50-ns ">
+      <div class="bg-white">
+          <img src="/img/uploaded/climate-smart-2.jpg" class="w-100" alt="night sky over land">
+      </div>
+    </div>
+    <div class="fl w-100 w-50-ns">
+      <div class="bg-blue-1 pv5 ph5" style="color: white;">
+        <h1 class="f1 lh-title pv3-ns">ABOUT US</h1>
+        <h1 class="f6 lh-copy pv1">
+          
+            {{ range .Params.sections }}
+                {{ partial "insert-text" (dict "text" .text)}}
+            {{ end }}
+
+        </h1>
+        </br>
+<!--
+        <h1 class="f6 lh-copy">We hope to create a digital space where successful and less than successful experiences on developing humanitarian projects and products can be shared across Jesuit’s engineering schools worldwide.</h1>
+        </br>
+        <h1 class="f6 lh-copy">Our goal is to facilitate the inspiration, collaboration, promotion, divulgation and support of humanitarian projects across Jesuit’s engineering schools to improve their impact and scope.</h1>
+        </br>
+        <h1 class="f6 lh-copy">Our vision is of a global and unified group of Jesuit engineering schools working together towards a common goal: to design and implement humanitarian products with the capability of  changing lives of the communities we work with through projects that promote a human centric design and frugal innovation approach.</h1>
+      -->
+<!--
+        <h1 class="f6 lh-copy pv4-ns">- ALLAN BAEZ MORALES</h1>
+
+
+{{ range .Params.sections }}
+
+{{ partial "short-text" (dict "heading" .heading "text" .text)}}
+
+{{ end }}
+-->
+      </div>
+    </div>
+  </div>
+</div>

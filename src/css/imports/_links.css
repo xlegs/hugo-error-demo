@@ -1,0 +1,39 @@
+.link {
+  text-decoration: none;
+  transition: var(--hover-transition);
+  color: inherit;
+}
+
+.link:link,
+.link:visited {
+  transition: color .15s ease-in;
+}
+.link:hover   {
+  transition: color .15s ease-in;
+  text-decoration: underline;
+}
+.link.dim:hover {
+  text-decoration: none;
+}
+.link:active  {
+  transition: color .15s ease-in;
+}
+.link:focus   {
+  transition: color .15s ease-in;
+  outline: 1px dotted currentColor;
+}
+
+.dim {
+  opacity: 1;
+  transition: opacity .15s ease-in;
+}
+
+.dim:hover, .dim:focus {
+  opacity: .5;
+  transition: opacity .15s ease-in;
+}
+
+.dim:active {
+  opacity: .8;
+  transition: opacity .15s ease-out;
+}

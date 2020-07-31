@@ -1,0 +1,62 @@
+fieldset
+{
+  position: relative;
+}
+
+.input-reset {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.button-reset::-moz-focus-inner,
+.input-reset::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+input, textarea {
+  background-color: var(--grey-2);
+  border-radius: var(--border-radius);
+  padding: 12px 16px 10px;
+  font-size: var(--spacing-medium);
+  line-height: 1.25;
+  position: relative;
+  transition: var(--hover-transition);
+  z-index: 2;
+  &:focus {
+    background-color: var(--white);
+  }
+  &:focus + label {
+    opacity: 1;
+    pointer-events: auto;
+
+  }
+}
+
+::-webkit-input-placeholder {
+   color: var(--black);
+   font-size: var(--spacing-medium);
+   line-height: normal;
+}
+
+:-moz-placeholder {
+   color: var(--black);
+   font-size: var(--spacing-medium);
+   line-height: normal;
+}
+
+::-moz-placeholder {
+   color: var(--black);
+   font-size: var(--spacing-medium);
+   line-height: normal;
+}
+
+:-ms-input-placeholder {
+   color: var(--black);
+   font-size: var(--spacing-medium);
+   line-height: normal;
+}
+
+label {
+  padding-left: 0.5em;
+}

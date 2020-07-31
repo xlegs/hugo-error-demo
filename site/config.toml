@@ -1,0 +1,8 @@
+baseurl = "https://iajes-frugal.netlify.app/"
+title = "Homepage"
+sectionPagesMenu = "main"
+
+[outputs]
+  home = ["HTML","JSON"]
+  page = ["HTML","JSON"]
+  section = ["HTML","JSON"]

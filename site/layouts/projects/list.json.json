@@ -1,0 +1,22 @@
+{{ define "main" }}
+[
+{{ range $index, $e := .Data.Pages }}
+    {{ if $index }}, {{ end }}
+    {
+        "name": "{{ .Title }}",
+        "permalink": "{{ .Permalink }}",
+        "university" : "{{ .Params.university }}",
+        "date" : "{{ .Date.Format "02 Jan 06 15:04 -0700" }}",
+        "status" : "{{ .Params.status }}",
+        "description" : "{{ .Params.description }}",
+        "cats" : [
+            {{ range $index, $e := .Params.cats }}
+            {{ if $index }}, {{ end }}
+            "{{ .category }}"
+            {{ end }}
+        ]
+        
+    }
+{{ end }}
+]
+{{end}}

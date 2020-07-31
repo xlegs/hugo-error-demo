@@ -1,0 +1,13 @@
+{{ define "main" }}
+[
+{{ range $index, $e := .Data.Pages }}
+    {{ if $index }}, {{ end }}
+    {
+        "name": "{{ .Title }}",
+        "location" : "{{ .Params.Location }}",
+        "website" : "{{ .Params.Website }}",
+        "logo" : "{{ .Params.Logo }}"
+    }
+{{ end }}
+]
+{{end}}

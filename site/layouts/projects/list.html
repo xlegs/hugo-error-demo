@@ -1,0 +1,173 @@
+{{ define "main" }}
+
+<div id="app">
+
+  <div class="mw8 center flex flex-wrap pv6">
+    <div class="w-30">
+
+        <div class="flex mb2">
+            <div class="f3">Filter</div>
+            <div class="ml5 pointer f6 link mt2" @click="checkAll">Reset</div>
+        </div>
+        <form>
+            <fieldset id="status" class="bn">
+              <legend class="fw7">Project Status</legend>
+              <div class="flex mb2">
+                  <div class="pointer f6 link" @click="checkAllStatus">Check All</div>
+                  <div class="ml5 pointer f6 link" @click="clearAllStatus">Clear All</div>
+              </div>
+      
+              <div class="fl mb2 w-33 f6" v-for="s in status">
+                <input v-model="selectedStatus" type="checkbox" :value="s" :id="s">
+                <label class="lh-copy" :for="s"><% s %></label>
+              </div>
+              </fieldset>
+        </form>
+        <form>
+            <fieldset id="university" class="bn">
+              <legend class="fw7">Universities</legend>
+              <div class="flex mb2">
+                  <div class="pointer f6 link" @click="checkAllUniversities">Check All</div>
+                  <div class="ml5 pointer f6 link" @click="clearAllUniversities">Clear All</div>
+              </div>
+      
+              <div class="mb2 f6" v-for="u in universities">
+                <input v-model="selectedUniversities" type="checkbox" :value="u" :id="u">
+                <label class="lh-copy" :for="u"><% u %></label>
+              </div>
+              </fieldset>
+        </form>
+        <form>
+          <fieldset id="categories" class="bn">
+            <legend class="fw7">Categories</legend>
+            <div class="flex mb2">
+                <div class="pointer f6 link" @click="checkAllCategories">Check All</div>
+                <div class="ml5 pointer f6 link" @click="clearAllCategories">Clear All</div>
+            </div>
+            <div class="mb2 f6" v-for="cat in categories">
+              <input v-model="selectedCategories" type="checkbox" :value="cat" :id="cat | slugify">
+              <label class="lh-copy" :for="cat | slugify"><% cat %></label>
+            </div>
+            </fieldset>
+        </form>
+        
+        
+    </div>
+    <div class="">
+        <ul class="flex-ns flex-wrap mhn1-ns pa3">
+            <div v-for="project in projects"  v-show="visible(project)" class="mw30-ns ph1-ns flex">
+              {{ .Render "li"}}
+            </div>
+
+        </ul>
+    </div>
+  </div>
+</div>
+
+<!-- development version, includes helpful console warnings -->
+<!--<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
+
+<!-- production version, optimized for size and speed -->
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+<!-- moment -->
+<script src="https://unpkg.com/moment"></script>
+
+<script>
+var app = new Vue({
+  el: '#app',
+  delimiters: ["<%","%>"],
+  data: {
+    "universities": null,
+    "projects": null,
+    "categories": ["Poverty", "Hunger", "Health and Well-being", "Education", "Gender Equality", "Clean Water and Sanitation", "Affordable and Clean Energy", "Decent Work and Economic Growth", "Industry, Innovation, and Infrastructure", "Reduced Inequality", "Sustainable Cities and Communities", "Responsible Consumption and Production", "Climate Action", "Environment (Underwater)", "Environment (On Land)", "Peace and Justice"],
+    "selectedCategories": [],
+    "status": ["Ongoing", "Completed", "Inactive"],
+    "selectedStatus": [],
+    "selectedUniversities": []
+  },
+  created: function () {
+    fetch("/universities/index.json")
+        .then(r => r.json())
+        .then(json => {
+          this.universities=json.data.map(u => u.name);
+          this.checkAll();
+        });
+    fetch("/projects/index.json")
+        .then(r => r.json())
+        .then(json => {
+          this.projects=json.data;
+        });
+    
+  },
+  methods: {
+    checkAll: function () {
+      this.checkAllCategories();
+      this.checkAllStatus();
+      this.checkAllUniversities();
+    },
+    checkAllCategories: function () {
+      this.selectedCategories = this.categories;
+    },
+    clearAllCategories: function () {
+      this.selectedCategories = [];
+    },
+    showCategory: function (c) {
+      this.selectedCategories = [c];
+    },
+    checkAllUniversities: function () {
+      this.selectedUniversities = this.universities;
+    },
+    clearAllUniversities: function () {
+      this.selectedUniversities = [];
+    },
+    showUniversity: function (u) {
+      this.selectedUniversities = [u];
+    },
+    checkAllStatus: function () {
+      this.selectedStatus = this.status;
+    },
+    clearAllStatus: function () {
+      this.selectedStatus = [];
+    },
+    showStatus: function (s) {
+      this.selectedStatus = [s];
+    },
+    visible: function (prj) {
+      var categories = this.visibleHelper(prj, prj.cats, this.selectedCategories);
+      var status = this.selectedStatus.includes(prj.status);
+      var university = this.selectedUniversities.includes(prj.university);
+
+      return (categories && status && university);
+    },
+    visibleHelper: function (prj, chk, obj) {
+      for (let i = 0; i < chk.length; i++) {
+        const el = chk[i];
+        if (obj.includes(el)) {
+          return true;
+        }
+      }
+
+      return false;
+    },
+  },
+  filters: {
+    formatDate: function (v) {
+      if (v) {
+        return moment(v).format('MMMM YYYY')
+      }
+    },
+    slugify: function (text) {
+      if (text) {
+        return text.toString().toLowerCase()
+          .replace(/\s+/g, '-')           // Replace spaces with -
+          .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+          .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+          .replace(/^-+/, '')             // Trim - from start of text
+          .replace(/-+$/, '');            // Trim - from end of text
+      }
+    }
+  },
+})
+</script>
+{{end}}

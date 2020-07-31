@@ -1,0 +1,25 @@
+{{ define "main" }}
+
+  <div class="mw6 center ph3 pv4">
+    <h1 class="f2 lh-title b mb3">{{.Title}}</h1>
+    <h2 class="f4 lh-title b mb3">{{.Params.status}}</h2>
+    <div class="flex justify-between grey-3 mb1">
+      <p class="mb0">{{ .Date.Format "Jan 2006" }}</p>
+      <p class="mb0">{{ .Params.University }}</p>
+    </div>
+    <ul class="list grey mb2">
+      {{ range .Params.cats }}
+      <li class="f6 dib mr2">{{ .category }}</li>
+      {{ end }}
+    </ul>
+    <hr/>
+    <div class="cms mw6">
+      <p>{{ if .Params.image }}<img src="{{ .Params.image }}" alt="{{ .Title }}" />{{ end }}{{ .Description }}</p>
+      
+      {{ .Content }}
+
+      <hr>
+      <p class="f6">Project Contact: {{ .Params.Contact_name }} (<a href="mailto:{{ .Params.Contact_email }}">{{ .Params.Contact_email }}</a>)</p>
+    </div>
+  </div>
+{{ end }}
